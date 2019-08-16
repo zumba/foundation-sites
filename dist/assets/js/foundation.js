@@ -342,7 +342,7 @@
         }
       }
 
-      S(window).load(function () {
+      var triggerResizes = function() {
         S(window)
           .trigger('resize.fndtn.clearing')
           .trigger('resize.fndtn.dropdown')
@@ -352,7 +352,11 @@
           .trigger('resize.fndtn.magellan')
           .trigger('resize.fndtn.topbar')
           .trigger('resize.fndtn.slider');
-      });
+      }
+
+      document.readyState === 'complete' ?
+        triggerResizes() :
+        S(window).on('load', triggerResizes);
 
       return scope;
     },
@@ -6368,7 +6372,7 @@
 
       S(window).off('.topbar').on('resize.fndtn.topbar', self.throttle(function () {
           self.resize.call(self);
-      }, 50)).trigger('resize.fndtn.topbar').load(function () {
+      }, 50)).trigger('resize.fndtn.topbar').on('load', function () {
           // Ensure that the offset is calculated after all of the pages resources have loaded
           S(this).trigger('resize.fndtn.topbar');
       });

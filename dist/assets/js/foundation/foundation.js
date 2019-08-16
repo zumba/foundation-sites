@@ -342,7 +342,7 @@
         }
       }
 
-      S(window).load(function () {
+      var triggerResizes = function() {
         S(window)
           .trigger('resize.fndtn.clearing')
           .trigger('resize.fndtn.dropdown')
@@ -352,7 +352,11 @@
           .trigger('resize.fndtn.magellan')
           .trigger('resize.fndtn.topbar')
           .trigger('resize.fndtn.slider');
-      });
+      }
+
+      document.readyState === 'complete' ?
+        triggerResizes() :
+        S(window).on('load', triggerResizes);
 
       return scope;
     },
